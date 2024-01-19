@@ -22,26 +22,6 @@ public class ccwc {
         }
     }
 
-    private static void processFile(String[] args) throws IOException {
-        switch (args[0]) {
-            case "-c":
-                argumentC(args);
-                break;
-            case "-l":
-                argumentL(args);
-                break;
-            case "-w":
-                argumentW(args);
-                break;
-            case "-m":
-                argumentM(args);
-                break;
-            default:
-                System.out.println("Invalid option: " + args[0]);
-                break;
-        }
-    }
-
     static void argumentC(String[] args) throws IOException {
         Path path = getPath(args);
         long byteLength = Files.size(path);
@@ -78,5 +58,25 @@ public class ccwc {
 
     static String getFileName(String[] args) {
         return " " + args[1];
+    }
+    
+    private static void processFile(String[] args) throws IOException {
+        switch (args[0]) {
+            case "-c":
+                argumentC(args);
+                break;
+            case "-l":
+                argumentL(args);
+                break;
+            case "-w":
+                argumentW(args);
+                break;
+            case "-m":
+                argumentM(args);
+                break;
+            default:
+                System.out.println("Invalid option: " + args[0]);
+                break;
+        }
     }
 }
