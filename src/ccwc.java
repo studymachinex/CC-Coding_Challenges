@@ -12,8 +12,8 @@ public class ccwc {
                 System.out.println("Usage: java ccwc -[c|l|w|m] <file>");
                 return;
             }
-            if (!fileFound(args)) {
-                throw new FileNotFoundException("File " + getFileName(args) + " not found");
+            if (!fileFound(args[1])) {
+                throw new FileNotFoundException("File " + getFileName(args[1]) + " not found");
             }
 
             processFile(args);
@@ -22,57 +22,58 @@ public class ccwc {
         }
     }
 
-    static void argumentC(String[] args) throws IOException {
-        Path path = getPath(args);
+    static void countBytes(String filePath) throws IOException {
+        Path path = getPath(filePath);
         long byteLength = Files.size(path);
-        System.out.println(byteLength + getFileName(args));
+        System.out.println(byteLength + getFileName(filePath));
     }
 
-    static void argumentL(String[] args) throws IOException {
+    static void countLines(String args) throws IOException {
         try (Stream<String> lines = Files.lines(getPath(args))) {
             long numberOfLines = lines.count();
             System.out.println(numberOfLines + getFileName(args));
+            lines.close();
         }
     }
 
-    static void argumentW(String[] args) throws IOException {
+    static void countWords(String args) throws IOException {
         String content = Files.readString(getPath(args));
         int wordCount = content.split("\\s+").length;
         System.out.println(wordCount + getFileName(args));
     }
 
-    static void argumentM(String[] args) throws IOException {
+    static void countCharacters(String args) throws IOException {
         String content = Files.readString(getPath(args));
         long charCount = content.length();
         System.out.println(charCount + getFileName(args));
     }
 
-    static boolean fileFound(String[] args) {
+    static boolean fileFound(String args) {
         Path path = getPath(args);
         return Files.exists(path);
     }
 
-    static Path getPath(String[] args) {
-        return Paths.get(args[1]);
+    static Path getPath(String args) {
+        return Paths.get(args);
     }
 
-    static String getFileName(String[] args) {
-        return " " + args[1];
+    static String getFileName(String args) {
+        return " " + args;
     }
     
     private static void processFile(String[] args) throws IOException {
         switch (args[0]) {
             case "-c":
-                argumentC(args);
+                countBytes(args[1]);
                 break;
             case "-l":
-                argumentL(args);
+                countLines(args[1]);
                 break;
             case "-w":
-                argumentW(args);
+                countWords(args[1]);
                 break;
             case "-m":
-                argumentM(args);
+                countCharacters(args[1]);
                 break;
             default:
                 System.out.println("Invalid option: " + args[0]);
