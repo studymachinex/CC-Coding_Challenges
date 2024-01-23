@@ -11,13 +11,10 @@ public class ccwc {
         String filePath = args[1];
         
         try {
-            if (args.length != 2) {
-                System.out.println("Usage: java ccwc -[c|l|w|m] <file>");
-                return;
-            }
-            if (!fileFound(args[1])) {
+            if (!fileFound(filePath)) {
                 throw new FileNotFoundException("File " + getFileName(args[1]) + " not found");
             }
+
             processFile(arg, filePath);
         } catch (IOException e) {
             System.out.println("An error occurred: " + e.getMessage());
@@ -25,8 +22,7 @@ public class ccwc {
     }
 
     static void countBytesFromFile(String filePath) throws IOException {
-        Path path = getPath(filePath);
-        long byteLength = Files.size(path);
+        long byteLength = Files.size(getPath(filePath));
         System.out.println(byteLength + getFileName(filePath));
     }
 
@@ -51,8 +47,7 @@ public class ccwc {
     }
 
     static boolean fileFound(String args) {
-        Path path = getPath(args);
-        return Files.exists(path);
+        return Files.exists(getPath(args));
     }
 
     static Path getPath(String args) {
