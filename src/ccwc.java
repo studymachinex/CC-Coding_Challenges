@@ -7,6 +7,9 @@ import java.util.stream.Stream;
 
 public class ccwc {
     public static void main(String[] args) {
+        String arg = args[0];
+        String filePath = args[1];
+        
         try {
             if (args.length != 2) {
                 System.out.println("Usage: java ccwc -[c|l|w|m] <file>");
@@ -15,8 +18,7 @@ public class ccwc {
             if (!fileFound(args[1])) {
                 throw new FileNotFoundException("File " + getFileName(args[1]) + " not found");
             }
-
-            processFile(args);
+            processFile(arg, filePath);
         } catch (IOException e) {
             System.out.println("An error occurred: " + e.getMessage());
         }
@@ -61,22 +63,22 @@ public class ccwc {
         return " " + args;
     }
     
-    private static void processFile(String[] args) throws IOException {
-        switch (args[0]) {
+    private static void processFile(String arg, String filePath ) throws IOException {
+        switch (arg) {
             case "-c":
-                countBytesFromFile(args[1]);
+                countBytesFromFile(filePath);
                 break;
             case "-l":
-                countLinesFromFile(args[1]);
+                countLinesFromFile(filePath);
                 break;
             case "-w":
-                countWordsFromFile(args[1]);
+                countWordsFromFile(filePath);
                 break;
             case "-m":
-                countCharactersFromFile(args[1]);
+                countCharactersFromFile(filePath);
                 break;
             default:
-                System.out.println("Invalid option: " + args[0]);
+                System.out.println("Invalid option: " +arg);
                 break;
         }
     }
