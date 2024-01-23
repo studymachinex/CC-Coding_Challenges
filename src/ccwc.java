@@ -22,13 +22,13 @@ public class ccwc {
         }
     }
 
-    static void countBytes(String filePath) throws IOException {
+    static void countBytesFromFile(String filePath) throws IOException {
         Path path = getPath(filePath);
         long byteLength = Files.size(path);
         System.out.println(byteLength + getFileName(filePath));
     }
 
-    static void countLines(String args) throws IOException {
+    static void countLinesFromFile(String args) throws IOException {
         try (Stream<String> lines = Files.lines(getPath(args))) {
             long numberOfLines = lines.count();
             System.out.println(numberOfLines + getFileName(args));
@@ -36,13 +36,13 @@ public class ccwc {
         }
     }
 
-    static void countWords(String args) throws IOException {
+    static void countWordsFromFile(String args) throws IOException {
         String content = Files.readString(getPath(args));
         int wordCount = content.split("\\s+").length;
         System.out.println(wordCount + getFileName(args));
     }
 
-    static void countCharacters(String args) throws IOException {
+    static void countCharactersFromFile(String args) throws IOException {
         String content = Files.readString(getPath(args));
         long charCount = content.length();
         System.out.println(charCount + getFileName(args));
@@ -64,16 +64,16 @@ public class ccwc {
     private static void processFile(String[] args) throws IOException {
         switch (args[0]) {
             case "-c":
-                countBytes(args[1]);
+                countBytesFromFile(args[1]);
                 break;
             case "-l":
-                countLines(args[1]);
+                countLinesFromFile(args[1]);
                 break;
             case "-w":
-                countWords(args[1]);
+                countWordsFromFile(args[1]);
                 break;
             case "-m":
-                countCharacters(args[1]);
+                countCharactersFromFile(args[1]);
                 break;
             default:
                 System.out.println("Invalid option: " + args[0]);
